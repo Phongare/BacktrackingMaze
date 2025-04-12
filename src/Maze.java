@@ -61,7 +61,7 @@ public class Maze {
             int newy = y + diry[i] * 2;
 
             //checking that we're not making a hole and we're not digging the same coordinate twice
-            if ( maze[newx][newy] == wall) {
+            if (inBounds(newx,newy) && maze[newx][newy] == wall) {
                 maze[x + dirx[i]][y + diry[i]] = path;
                 maze[newx][newy] = path;
 
@@ -69,6 +69,11 @@ public class Maze {
                 digging(newx, newy);
             }
         }
+    }
+
+
+    public boolean inBounds(int x, int y) {
+        return x > 0 && y > 0 && x < rows && y < cols;
     }
 
 
