@@ -77,4 +77,30 @@ public class Maze {
     }
 
 
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("ВВЕДИТЕ ЧИСЛО: ");
+        int size = isValid(input);
+
+        Maze m = new Maze(size, size);
+
+    }
+
+    public static int isValid(Scanner input) {
+
+        while (true) {
+            try {
+                int m = Integer.parseInt(input.nextLine());
+                if(m>9) {
+                    return m;
+                } else {
+                    System.out.println("ВВЕДИТЕ ПОЛОЖИТЕЛЬНОЕ ЧИСЛО БОЛЬШЕ ДЕВЯТИ: ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.print("ОШИБКА. ВВЕДЕНО НЕ ЦЕЛОЕ ЧИСЛО: ");
+            }
+
+        }
+    }
+
 }
