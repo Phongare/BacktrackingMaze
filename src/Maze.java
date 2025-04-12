@@ -7,15 +7,16 @@ public class Maze {
 
     Random rand = new Random();
 
-    char wall = '#';
-    char path = ' ';
+    public static char wall = '▆';
+    public static char path = ' ';
+    public static char visited = '0';
 
-    int[] dirx = {-1, 1, 0, 0}; //up down right left
-    int[] diry = {0, 0, 1, -1};
+    public static int[] dirx = {-1, 1, 0, 0}; //up down right left
+    public static int[] diry = {0, 0, 1, -1};
 
-    int startX = 1, startY = 1;
+    public static int startX = 1, startY = 1;
 
-    int endX, endY;
+    public static int endX, endY;
 
     public Maze(int rows, int cols) {
 
@@ -62,6 +63,7 @@ public class Maze {
 
             //checking that we're not making a hole and we're not digging the same coordinate twice
             if (inBounds(newx,newy) && maze[newx][newy] == wall) {
+
                 maze[x + dirx[i]][y + diry[i]] = path;
                 maze[newx][newy] = path;
 
@@ -83,6 +85,8 @@ public class Maze {
         int size = isValid(input);
 
         Maze m = new Maze(size, size);
+
+        solveMaze(m.maze, m.startX, m.startY, m.endX, m.endY);
 
         m.printMaze();
     }
@@ -111,5 +115,34 @@ public class Maze {
             }
             System.out.println();
         }
+
     }
+
+    public static boolean solveMaze(char[][] maze, int x, int y, int endX, int endY) {
+
+        if (x == endX && y == endY) {
+            maze[x][y] = visited;
+            return true;
+        }
+
+        if (maze[x][y] != path) {
+            return false;
+        }
+
+        maze[x][y] = visited;
+        for (int d = 0; d < 4; d++) {
+            int newx = x + dirx[d];
+            int newy = y + diry[d];
+
+            if (solveMaze(maze, newx, newy, endX, endY)) {
+                return true;
+            }
+        }
+
+        maze[x][y] = path;
+        return false;
+    }
+
+
 }
+
