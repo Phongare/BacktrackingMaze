@@ -11,7 +11,8 @@ public class Maze {
     public static char path = ' ';
     public static char visited = '0';
 
-    public static int[] dirx = {-1, 1, 0, 0}; //up down right left
+    //directions
+    public static int[] dirx = {-1, 1, 0, 0};
     public static int[] diry = {0, 0, 1, -1};
 
     public static int startX = 1, startY = 1;
@@ -43,7 +44,7 @@ public class Maze {
     }
 
     public void generate() {
-
+        //firstly all maze is the whole wall;
         for (char[] row : maze) {
             Arrays.fill(row, wall);
         }
@@ -92,7 +93,7 @@ public class Maze {
     }
 
     public static int isValid(Scanner input) {
-
+        //because of the while cycle this function won't leave you until you write the valid symbols
         while (true) {
             try {
                 int m = Integer.parseInt(input.nextLine());
@@ -109,6 +110,7 @@ public class Maze {
     }
 
     public void printMaze() {
+        //regular printing 2D array
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 System.out.print(maze[i][j] + " ");
@@ -119,26 +121,39 @@ public class Maze {
     }
 
     public static boolean solveMaze(char[][] maze, int x, int y, int endX, int endY) {
-
+        //if coordinates are on finish it returns true and solveMaze is completed
         if (x == endX && y == endY) {
             maze[x][y] = visited;
             return true;
         }
-
+        //if coordinates are not path, then function goes back
         if (maze[x][y] != path) {
             return false;
         }
-
+        //if everything is good coordinates become visited
         maze[x][y] = visited;
+        if(maze[x+1][y]==visited) {
+            maze[x][y]='△';
+        } else if(maze[x-1][y]==visited) {
+            maze[x][y]='∇';
+        } else if(maze[x][y-1]==visited) {
+            maze[x][y]='▷';
+        } else if(maze[x][y+1]==visited) {
+            maze[x][y]='◁';
+        }
+
+
         for (int d = 0; d < 4; d++) {
             int newx = x + dirx[d];
             int newy = y + diry[d];
-
+            //then from this visited coordinates another SolveMaze starts working
             if (solveMaze(maze, newx, newy, endX, endY)) {
                 return true;
             }
+            //when in some far recursive function we reach finish then every function returns true and the whole function is completed
         }
 
+        //if for cycle doesn't give true,then this path is incorrect and we have to go back
         maze[x][y] = path;
         return false;
     }
