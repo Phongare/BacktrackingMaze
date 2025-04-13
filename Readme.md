@@ -9,3 +9,5 @@ if everything is good then we mark this one as a visited cell.
 Then we dig in random direction and call the Solving function again but from a new coordinate.
 In the perfect way it will find a finish and give us true which will mean end of a fucntion.
 But if there's no way to dig anymore, function goes back and marks our coordinate as a path again.
+# Example run
+![Screenshot](https://github.com/Phongare/BacktrackingMaze/blob/master/изображение_2025-04-13_120859286.png)
